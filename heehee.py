@@ -2,10 +2,15 @@ import discord
 from discord import app_commands
 import asyncio
 
-gids = [770380495170568252]
-soundLoc = ".\\sounds\\"
+//WHAT YOU NEED TO CHANGE!!!
+gids = [] //add your guild ID in here
+ffmpegLoc = "" //set the location of ffmpeg.exe here
+key = "KEY GOES HERE!!!!!"
+
+//To add an extra sound, just follow the format here
 sounds = {"joner":"Woodson_High_School.mp3", "ping":"ping.mp3", "heheheha":"heheheha.mp3", "cry":"huh", "yawn":"yawn.mp3", "wat da dog doin":"dog.mp3", "lick":"lick.mp3"}
 names = list(sounds.keys())
+soundLoc = ".\\sounds\\"
 
 client = discord.Client(intents=discord.Intents.all())
 tree = app_commands.CommandTree(client)
@@ -25,12 +30,12 @@ async def emote(ctx, emote: str):
             await ctx.response.send_message(f"hahahahaha", ephemeral=True)
             channel = voice_channel.name
             vc = await voice_channel.connect()
-            vc.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=soundLoc + sounds[emote]))
+            vc.play(discord.FFmpegPCMAudio(executable=ffmpegLoc, source=soundLoc + sounds[emote]))
             while vc.is_playing():
                 await asyncio.sleep(1)
             await vc.disconnect()
         else:
-            await ctx.respond(f"try again, and make sure to be in a voice channel and choose an option given.", ephemeral=True)
+            await ctx.respond(f"Try again. Make sure to be in a voice channel and choose an option given.", ephemeral=True)
 
 @emote.autocomplete("emote")
 async def fruits_autocomplete(interaction: discord.Interaction, current: str): 
@@ -39,4 +44,4 @@ async def fruits_autocomplete(interaction: discord.Interaction, current: str):
         for emo in names if current.lower() in emo
     ]
 
-client.run('OTU2NzMzMjc3OTk2MjE2MzIw.Yj0hTA.LFF1LkB4UIdSc_w20LlJuj49Kn0')
+client.run(key)
